@@ -1,5 +1,7 @@
 package poly.edu.DATN.ServiceImpl;
 
+
+
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -23,42 +25,42 @@ public class ProductServiceImpl implements ProductService{
 	ProductRepository productRepository;
 
 	@Override
-	public <S extends Integer> S save(S entity) {
+	public <S extends Product> S save(S entity) {
 		return productRepository.save(entity);
 	}
 
 	@Override
-	public <S extends Integer> Optional<S> findOne(Example<S> example) {
+	public <S extends Product> Optional<S> findOne(Example<S> example) {
 		return productRepository.findOne(example);
 	}
 
 	@Override
-	public List<Integer> findAll() {
+	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
 
 	@Override
-	public Page<Integer> findAll(Pageable pageable) {
+	public Page<Product> findAll(Pageable pageable) {
 		return productRepository.findAll(pageable);
 	}
 
 	@Override
-	public List<Integer> findAll(Sort sort) {
+	public List<Product> findAll(Sort sort) {
 		return productRepository.findAll(sort);
 	}
 
 	@Override
-	public List<Integer> findAllById(Iterable<Product> ids) {
+	public List<Product> findAllById(Iterable<Integer> ids) {
 		return productRepository.findAllById(ids);
 	}
 
 	@Override
-	public Optional<Integer> findById(Product id) {
+	public Optional<Product> findById(Integer id) {
 		return productRepository.findById(id);
 	}
 
 	@Override
-	public <S extends Integer> List<S> saveAll(Iterable<S> entities) {
+	public <S extends Product> List<S> saveAll(Iterable<S> entities) {
 		return productRepository.saveAll(entities);
 	}
 
@@ -68,37 +70,37 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public <S extends Integer> S saveAndFlush(S entity) {
+	public <S extends Product> S saveAndFlush(S entity) {
 		return productRepository.saveAndFlush(entity);
 	}
 
 	@Override
-	public boolean existsById(Product id) {
+	public boolean existsById(Integer id) {
 		return productRepository.existsById(id);
 	}
 
 	@Override
-	public <S extends Integer> List<S> saveAllAndFlush(Iterable<S> entities) {
+	public <S extends Product> List<S> saveAllAndFlush(Iterable<S> entities) {
 		return productRepository.saveAllAndFlush(entities);
 	}
 
 	@Override
-	public <S extends Integer> Page<S> findAll(Example<S> example, Pageable pageable) {
+	public <S extends Product> Page<S> findAll(Example<S> example, Pageable pageable) {
 		return productRepository.findAll(example, pageable);
 	}
 
 	@Override
-	public void deleteInBatch(Iterable<Integer> entities) {
+	public void deleteInBatch(Iterable<Product> entities) {
 		productRepository.deleteInBatch(entities);
 	}
 
 	@Override
-	public <S extends Integer> long count(Example<S> example) {
+	public <S extends Product> long count(Example<S> example) {
 		return productRepository.count(example);
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<Integer> entities) {
+	public void deleteAllInBatch(Iterable<Product> entities) {
 		productRepository.deleteAllInBatch(entities);
 	}
 
@@ -108,32 +110,32 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public <S extends Integer> boolean exists(Example<S> example) {
+	public <S extends Product> boolean exists(Example<S> example) {
 		return productRepository.exists(example);
 	}
 
 	@Override
-	public void deleteById(Product id) {
+	public void deleteById(Integer id) {
 		productRepository.deleteById(id);
 	}
 
 	@Override
-	public void deleteAllByIdInBatch(Iterable<Product> ids) {
+	public void deleteAllByIdInBatch(Iterable<Integer> ids) {
 		productRepository.deleteAllByIdInBatch(ids);
 	}
 
 	@Override
-	public void delete(Integer entity) {
+	public void delete(Product entity) {
 		productRepository.delete(entity);
 	}
 
 	@Override
-	public <S extends Integer, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
+	public <S extends Product, R> R findBy(Example<S> example, Function<FetchableFluentQuery<S>, R> queryFunction) {
 		return productRepository.findBy(example, queryFunction);
 	}
 
 	@Override
-	public void deleteAllById(Iterable<? extends Product> ids) {
+	public void deleteAllById(Iterable<? extends Integer> ids) {
 		productRepository.deleteAllById(ids);
 	}
 
@@ -143,12 +145,12 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Integer getOne(Product id) {
+	public Product getOne(Integer id) {
 		return productRepository.getOne(id);
 	}
 
 	@Override
-	public void deleteAll(Iterable<? extends Integer> entities) {
+	public void deleteAll(Iterable<? extends Product> entities) {
 		productRepository.deleteAll(entities);
 	}
 
@@ -158,19 +160,20 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Integer getById(Product id) {
+	public Product getById(Integer id) {
 		return productRepository.getById(id);
 	}
 
 	@Override
-	public <S extends Integer> List<S> findAll(Example<S> example) {
+	public <S extends Product> List<S> findAll(Example<S> example) {
 		return productRepository.findAll(example);
 	}
 
 	@Override
-	public <S extends Integer> List<S> findAll(Example<S> example, Sort sort) {
+	public <S extends Product> List<S> findAll(Example<S> example, Sort sort) {
 		return productRepository.findAll(example, sort);
 	}
+
 	
 	
 }
