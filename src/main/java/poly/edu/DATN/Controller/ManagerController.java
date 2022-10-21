@@ -56,6 +56,7 @@ public class ManagerController  {
 			@CookieValue(value = "accountuser", required = false) String username, HttpServletRequest request){
 			Cookie[] cookies = request.getCookies();//sử dụng rqck trả về 1 mảng người dùng yêu cầu
 			if(cookies != null) {//kiểm tra cookie
+				//kiểm tra cookie
 				for (int i = 0; i < cookies.length; i++) {//sd vl for để duyệt qua cookie
 					//sd length lấy tt phần tử cookies
 					if(cookies[i].getName().equals("accountuser")) {//kiểm tra nếu i khác entity
