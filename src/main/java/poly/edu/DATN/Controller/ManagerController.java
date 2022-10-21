@@ -41,7 +41,7 @@ public class ManagerController  {
 			if(cookie[i].getName().equals("accountuser")){
 				 //so sánh phần tử i trong cookie với accountuser
 				User user = this.userService.findByPhone(cookie[i].getValue()).get();
-				
+				//sử dụng pt findbyphone để so sánh user
 				//đưa các giá trị vào model
 				model.addAttribute("fullname",user.getFullname());
 				model.addAttribute("image",user.getImageBase64());
