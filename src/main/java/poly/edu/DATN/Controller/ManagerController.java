@@ -6,6 +6,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -72,6 +73,7 @@ public class ManagerController  {
 			return "redirect:/login";
 	}
 	
+	//action add
 	@PostMapping(value = "/manager/addProdcut")
 	public String addProduct(@RequestParam(value = "image") MultipartFile image,
 			@ModelAttribute(name = "product") @Valid Product product, BindingResult result,
@@ -85,7 +87,7 @@ public class ManagerController  {
 			return "redirect:/manager/listProduct";
 	}
 	
-	//action update
+	
 	@GetMapping(value = "/manager/updateProdcut")
 	public String updateProduct(ModelMap model, @PathVariable(name = "idProduct") int id,
 			@CookieValue(value = "accountuser", required = false) String username, HttpServletRequest request) {
@@ -98,6 +100,22 @@ public class ManagerController  {
 					}
 				}
 			}
-			return "manager/updateProduct";
+			return "/manager/updateProduct";
+	}
+	
+	//action update
+	@PostMapping(value = "/manager/updateProduct")
+	public String updateProduct(@RequestParam("image") MultipartFile image, 
+			@ModelAttribute ("product") @Valid Product product,BindingResult result, 
+			ModelMap model) {
+		
+		if(result.hasErrors()) {
+			return "/manager/updateProduct";
+		}else {
+			this.productService.save(product);
+			model.addAttribute("success","Cập nhật sản phẩm thành công!");
+		}
+		
+		return "manager/updateProduct";
 	}
 }
