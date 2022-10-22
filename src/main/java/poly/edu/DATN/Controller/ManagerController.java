@@ -1,5 +1,6 @@
 package poly.edu.DATN.Controller;
 
+import java.util.List;
 //import java.util.Iterator;
 import java.util.UUID;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -107,18 +109,32 @@ public class ManagerController  {
 	@PostMapping(value = "/manager/updateProduct")
 	public String updateProduct(@RequestParam("image") MultipartFile image, 
 			@ModelAttribute ("product") @Valid Product product,BindingResult result, 
-			ModelMap model) {
+			RedirectAttributes redirect) {
 		
 		if(result.hasErrors()) {
 			return "/manager/updateProduct";
 		}else {
 			this.productService.save(product);
-			model.addAttribute("success","Cập nhật sản phẩm thành công!");
+			redirect.addFlashAttribute("success","Cập nhật sản phẩm thành công!");
 		}
 		if(!product.getImageBase64().isEmpty()) {//su ly file upload, ton tai them !
-			UUID uuid = UUID.randomUUID();
-			String uuString = uuid.toString();	
+			try{
+				product.setImage(image.getBytes());
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}else {
+			product.setImage(productService.findById(product.getIdProduct()).get().getImage());
 		}
 		return "manager/updateProduct";
+	}
+	
+	@RequestMapping("")
+	public String list(RedirectAttributes redirect) {
+		List<Product> list= productService.findAll();
+		
+		redirect.addFlashAttribute("product",list);
+		
+		return "manager/product/list";
 	}
 }
