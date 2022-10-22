@@ -10,11 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
+import org.springframework.stereotype.Service;
 
 import poly.edu.DATN.Entity.User;
 import poly.edu.DATN.Repository.UserRepository;
 import poly.edu.DATN.Service.UserService;
-
+@Service
 public class UserServiceImpl implements UserService{
 	
 	@Autowired

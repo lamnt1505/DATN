@@ -1,12 +1,13 @@
 package poly.edu.DATN.Controller;
 
-import java.util.Iterator;
+//import java.util.Iterator;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
+//import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -56,7 +57,7 @@ public class ManagerController  {
 	public String addProduct(ModelMap model, 
 			@CookieValue(value = "accountuser", required = false) String username, HttpServletRequest request){
 			Cookie[] cookies = request.getCookies();//sử dụng rqck trả về 1 mảng người dùng yêu cầu
-			if(cookies != null) {//kiểm tra cookie
+			if(cookies != null) {//chinh sua file
 				//kiểm tra cookie
 				for (int i = 0; i < cookies.length; i++) {//sd vl for để duyệt qua cookie
 					//sd length lấy tt phần tử cookies
@@ -91,8 +92,7 @@ public class ManagerController  {
 	@GetMapping(value = "/manager/updateProdcut")
 	public String updateProduct(ModelMap model, @PathVariable(name = "idProduct") int id,
 			@CookieValue(value = "accountuser", required = false) String username, HttpServletRequest request) {
-		
-			Cookie[] cookies = request.getCookies();
+			Cookie[] cookies = request.getCookies();//sử dụng rqck trả về danh sách các cookie
 			if(cookies != null) {//kiểm tra cookie
 				for(int i = 0; i < cookies.length; ++i) {
 					if(cookies[i].getName().equals("accountuser")) {
@@ -115,7 +115,10 @@ public class ManagerController  {
 			this.productService.save(product);
 			model.addAttribute("success","Cập nhật sản phẩm thành công!");
 		}
-		
+		if(!product.getImageBase64().isEmpty()) {//su ly file upload, ton tai them !
+			UUID uuid = UUID.randomUUID();
+			String uuString = uuid.toString();	
+		}
 		return "manager/updateProduct";
 	}
 }
