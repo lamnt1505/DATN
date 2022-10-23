@@ -174,6 +174,8 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.findAll(example, sort);
 	}
 
-	
-	
+	@Override
+	public List<Product> listProduct(){
+		return productRepository.listProduct();
+	}
 }
