@@ -126,7 +126,7 @@ public class ManagerController  {
 		}else {
 			product.setImage(productService.findById(product.getIdProduct()).get().getImage());
 		}
-		return "manager/updateProduct";
+		return "redirect:/manager/listProduct";
 	}
 	
 	@RequestMapping("")
@@ -136,5 +136,23 @@ public class ManagerController  {
 		redirect.addFlashAttribute("product",list);
 		
 		return "manager/product/list";
+	}
+	
+	@GetMapping("/manager/deleteProduct/{idProduct}")
+	public String deleteProduct(@PathVariable("idProduct") int id, RedirectAttributes redirect
+			,HttpServletRequest request, @CookieValue(value = "accountuser", required = false) String username) {
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			for(int i = 0; i < cookies.length; ++i) {
+				if(cookies[i].getName().equals("accountuser")) {
+					User user = this.userService.findByPhone(cookies[i].getValue()).get();
+					this.productService.deleteById(id);
+					
+					redirect.addFlashAttribute("success","Product is deleted!");
+					return "redirect:/manager/listProduct";
+				}
+			}
+		}
+		return "rediredct:/login";
 	}
 }
