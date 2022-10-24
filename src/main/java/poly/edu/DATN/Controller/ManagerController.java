@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 //import org.springframework.beans.BeanUtils;
@@ -58,9 +59,32 @@ public class ManagerController {
 			}
 		}
 	}
+	
+	@GetMapping(value = "/manager")//kich hoat action pt get
+	public String manager(ModelMap model, @CookieValue(value = "accountuser", required = false) String username,
+			MultipartFile image, HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();//sử dụng rqck trả về danh sách các cookie
+		if (cookies != null) {//kiểm tra cookie
+			for (int i = 0; i < cookies.length; ++i) {//sd vl for để duyệt qua cookie
+			    //sd length lấy tt phần tử cookies
+				if (cookies[i].getName().equals("accountuser")) {
+					User user = this.userService.findByPhone(cookies[i].getValue()).get();
+					//đưa các giá trị vào model
+					model.addAttribute("username", username);
+					model.addAttribute("fullname", user.getFullname());
+					model.addAttribute("image", user.getImageBase64());
 
+					return "redirect:/manager/listCategory";
+				}
+			}
+
+		}
+		return "redirect:/login";
+
+	}
+	
 	// action add
-	@GetMapping(value = "/manager/addProdcut")
+	@GetMapping(value = "/manager/addProduct")
 	public String addProduct(ModelMap model, @CookieValue(value = "accountuser", required = false) String username,
 			HttpServletRequest request) {
 		Cookie[] cookies = request.getCookies();// sử dụng rqck trả về 1 mảng người dùng yêu cầu
@@ -83,7 +107,7 @@ public class ManagerController {
 	}
 
 	// action add
-	@PostMapping(value = "/manager/addProdcut")
+	@PostMapping(value = "/manager/addProduct")
 	public String addProduct(@RequestParam(value = "image") MultipartFile image,
 			@ModelAttribute(name = "product") @Valid Product product, BindingResult result,
 			RedirectAttributes redirect) {
