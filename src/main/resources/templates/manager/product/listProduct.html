@@ -74,11 +74,9 @@ overflow: hidden;
 			<!-- partial -->
 			<div class="main-panel">
 				<div class="content-wrapper">
-
 					<div class="row">
 						<div class="col-lg-12 grid-margin stretch-card">
 							<div class="card">
-
 								<div class="card-body">
 									<div th:if="${success}"
 										class="row alert alert-success alert-dismissible"
@@ -123,10 +121,9 @@ overflow: hidden;
 													<td th:text="${product.origin}"></td>
 													<td><p th:text="${product.description}"></p></td>
 													<td th:text="${product.category.name}"></td>
-													<td><a class="btn btn-info"
-														th:href="@{'/manager/updateProduct/'+${product.idProduct}}">Cập
-															Nhập</a> <a class="btn btn-danger"
-														th:href="@{'/manager/deleteProduct/'+${product.idProduct}}">Xóa</a>
+													<td>
+													<a class="btn btn-info" th:href="@{'/manager/updateProduct/'+${product.idProduct}}">Cập Nhập</a> 
+													<a class="btn btn-danger" th:href="@{'/manager/deleteProduct/'+${product.idProduct}}">Xóa</a>
 													</td>
 												</tr>
 											</tbody>
