@@ -166,7 +166,9 @@ public class ManagerController {
 		// sử dụng addFlashAttribute tránh submit lại form
 		return "redirect:/listProduct/page/1";
 	}
-
+	
+	
+	
 	@GetMapping("/manager/deleteProduct/{idProduct}")
 	public String deleteProduct(@PathVariable("idProduct") int id, RedirectAttributes redirect,
 			HttpServletRequest request, @CookieValue(value = "accountuser", required = false) String username) {
