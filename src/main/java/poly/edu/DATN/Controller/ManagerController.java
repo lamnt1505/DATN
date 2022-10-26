@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 //import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -119,7 +120,57 @@ public class ManagerController {
 		}
 		return "redirect:/manager/listProduct";
 	}
-
+	
+	@GetMapping(value = "/listProduct/page/{pageNumber}")//
+	public String showProduct(@CookieValue(value = "accountuser")String username, HttpServletRequest request, HttpServletResponse response
+	        , @PathVariable int pageNumber, Model model) {
+	        
+	    Cookie[] cookies = request.getCookies();//sử dụng rqck trả về danh sách các cookie
+	    if(cookies != null) {//kiểm tra cookie
+	        for(int i = 0; i < cookies.length; i++) {//sử dụng vl for để duyệt qua các cookie
+	            if(cookies[i].getName().equals("accountuser")) {
+	                User user = this.userService.findByPhone(cookies[i].getValue()).get();
+	                
+	                PagedListHolder<?> pages = (PagedListHolder<?>) request.getSession().getAttribute("product");
+	                int pagesize = 5;
+	                
+	                List<Product> list = productService.listProduct();
+	                if(pages == null) {
+	                    pages = new PagedListHolder<>(list);
+	                    pages.setPageSize(pagesize);
+	                }else {
+	                    final int goToPage = pageNumber - 1;
+	                    if(goToPage <= pages.getPageCount() && goToPage >= 0) {
+	                        pages.setPage(goToPage);
+	                    }
+	                }
+	                request.getSession().setAttribute("product",pages);
+	                int current = pages.getPage() + 1;
+	                int begin = Math.max(1, current - list.size());
+	                
+	                int end = Math.min(begin + 5, pages.getPageCount());
+	                int totalPageCount = pages.getPageCount();//tính toán số trang hiển thị trên view
+	                
+	                String baseUrl = "/listProduct/page/";
+	                
+	                model.addAttribute("beginIndex", begin);
+                    model.addAttribute("endIndex", end);
+                    model.addAttribute("currentIndex", current);
+                    model.addAttribute("totalPageCount", totalPageCount);
+                    model.addAttribute("baseUrl", baseUrl);
+                    model.addAttribute("product", pages);
+                    model.addAttribute("username", username);
+                    model.addAttribute("fullname", user.getFullname());
+                    model.addAttribute("image", user.getImageBase64());
+                    
+                    return "/manager/product/listProduct";
+	            }	     
+	        }
+	    }
+	        
+	    return"redirect:/login";
+	}
+	
 	@GetMapping(value = "/manager/updateProdcut")
 	public String updateProduct(ModelMap model, @PathVariable(name = "idProduct") int id,
 			@CookieValue(value = "accountuser", required = false) String username, HttpServletRequest request) {
@@ -190,4 +241,5 @@ public class ManagerController {
 		}
 		return "rediredct:/login";
 	}
+	
 }
