@@ -25,6 +25,11 @@ public class ProductServiceImpl implements ProductService{
 	ProductRepository productRepository;
 
 	@Override
+    public List<Product> showListProductForIndex() {
+        return productRepository.showListProductForIndex();
+    }
+
+    @Override
 	public <S extends Product> S save(S entity) {
 		return productRepository.save(entity);
 	}
@@ -38,8 +43,13 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
-
+	
 	@Override
+    public List<Product> showListProductByIdCategoryFilter(int idCategory) {
+        return productRepository.showListProductByIdCategoryFilter(idCategory);
+    }
+
+    @Override
 	public Page<Product> findAll(Pageable pageable) {
 		return productRepository.findAll(pageable);
 	}
